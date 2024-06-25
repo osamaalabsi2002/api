@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pokédex</title>
+  </head>
+
+  <body>
+    <form>
+      <input id="input" type="text" placeholder="Enter Pokémon Name" />
+      <button id="button" onclick="bokeman()">Show Pokémon</button>
+
+      <img src="" alt="Pokémon Image" id="img" />
+      <div id="pokemonInfo"></div>
+    </form>
+  </body>
+  <script>
+    bokeman();
+
+    async function bokeman() {
+      const pokemonName = document.getElementById("input").value.toLowerCase();
+      const url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        display(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        document.getElementById("pokemonInfo").innerHTML = "Pokémon not found";
+      }
+    }
+
+    function display(data) {
+      const pokemonInfo = document.getElementById("pokemonInfo");
+      pokemonInfo.innerHTML = `
+         
+                <img src="${data.sprites.front_default}" class="thumbnail">
+                <h3>${data.name}</h3>
+           
+            </div>
+        `;
+    }
+  </script>
+</html>
